@@ -15,6 +15,7 @@ from Dungeons import dungeon_music_addresses
 from Regions import location_table
 from Text import MultiByteTextMapper, CompressedTextMapper, text_addresses, Credits, TextTable
 from Text import Uncle_texts, Ganon1_texts, TavernMan_texts, Sahasrahla2_texts, Triforce_texts, Blind_texts, BombShop2_texts, junk_texts
+
 from Text import KingsReturn_texts, Sanctuary_texts, Kakariko_texts, Blacksmiths_texts, DeathMountain_texts, LostWoods_texts, WishingWell_texts, DesertPalace_texts, MountainTower_texts, LinksHouse_texts, Lumberjacks_texts, SickKid_texts, FluteBoy_texts, Zora_texts, MagicShop_texts, Sahasrahla_names
 from Utils import output_path, local_path, int16_as_bytes, int32_as_bytes, snes_to_pc
 from Items import ItemFactory
@@ -86,19 +87,18 @@ class LocalRom(object):
             self.patch_base_rom()
             self.orig_buffer = self.buffer.copy()
 
-    def write_byte(self, address, value):
+    def write_byte(self, address: int, value):
         self.buffer[address] = value
 
-    def write_bytes(self, startaddress, values):
-        for i, value in enumerate(values):
-            self.write_byte(startaddress + i, value)
+    def write_bytes(self, startaddress: int, values):
+        self.buffer[startaddress:startaddress + len(values)] = values
 
     def write_to_file(self, file):
         with open(file, 'wb') as outfile:
             outfile.write(self.buffer)
 
     @staticmethod
-    def fromJsonRom(rom, file, rom_size = 0x200000):
+    def fromJsonRom(rom, file, rom_size=0x200000):
         ret = LocalRom(file, True, rom.name, rom.hash)
         ret.buffer.extend(bytearray([0x00]) * (rom_size - len(ret.buffer)))
         for address, values in rom.patches.items():
@@ -153,10 +153,11 @@ def write_int32s(rom, startaddress, values):
     for i, value in enumerate(values):
         write_int32(rom, startaddress + (i * 4), value)
 
-def read_rom(stream):
+
+def read_rom(stream) -> bytearray:
     "Reads rom into bytearray and strips off any smc header"
     buffer = bytearray(stream.read())
-    if len(buffer)%0x400 == 0x200:
+    if len(buffer) % 0x400 == 0x200:
         buffer = buffer[0x200:]
     return buffer
 
@@ -783,8 +784,7 @@ def patch_rom(world, rom, player, team, enemized):
         rom.write_byte(0x180182, 0x00) # Don't auto equip silvers on pickup
 
     # set up game internal RNG seed
-    for i in range(1024):
-        rom.write_byte(0x178000 + i, random.randint(0, 255))
+    rom.write_bytes(0x178000, random.getrandbits(8 * 1024).to_bytes(1024, 'big'))
 
     # shuffle prize packs
     prizes = [0xD8, 0xD8, 0xD8, 0xD8, 0xD9, 0xD8, 0xD8, 0xD9, 0xDA, 0xD9, 0xDA, 0xDB, 0xDA, 0xD9, 0xDA, 0xDA, 0xE0, 0xDF, 0xDF, 0xDA, 0xE0, 0xDF, 0xD8, 0xDF,
