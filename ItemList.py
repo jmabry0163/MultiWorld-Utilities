@@ -487,7 +487,6 @@ def set_up_shops(world, player):
         rss.locked = True
 
 
-def get_pool_core(progressive, shuffle, difficulty, timer, goal, mode, swords, retro, door_shuffle):
 def get_pool_core(world, player: int):
     progressive = world.progressive[player]
     shuffle = world.shuffle[player]

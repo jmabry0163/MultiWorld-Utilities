@@ -70,8 +70,6 @@ def set_rules(world, player):
     ganons_tower = world.get_entrance('Inverted Ganons Tower' if world.mode[player] == 'inverted' else 'Ganons Tower', player)
     set_rule(ganons_tower, lambda state: False) # This is a safety for the TR function below to not require GT entrance in its key logic.
 
-    set_trock_key_rules(world, player)
-
     set_rule(ganons_tower, lambda state: state.has_crystals(world.crystals_needed_for_gt[player], player))
 
     if world.mode[player] != 'inverted':
@@ -1486,8 +1484,8 @@ def set_bunny_rules(world, player):
                     if world.logic[player] == 'owglitches' and entrance.name not in OWGSets.get_invalid_mirror_bunny_entrances_dw():
                         for location in entrance.connected_region.locations:
                             if location.name in OWGSets.get_superbunny_accessible_locations():
-                                possible_options.append(lambda state: path_to_access_rule(new_path, entrance) and state.has_Mirror(player))continue  else:
-                        continue
+                                possible_options.append(
+                                    lambda state: path_to_access_rule(new_path, entrance) and state.has_Mirror(player))
                 if new_region.is_dark_world:
                     queue.append((new_region, new_path))
                 else:
@@ -1596,8 +1594,8 @@ def set_inverted_bunny_rules(world, player):
                     if world.logic[player] == 'owglitches' and entrance.name not in OWGSets.get_invalid_mirror_bunny_entrances_lw():
                         for location in entrance.connected_region.locations:
                             if location.name in OWGSets.get_superbunny_accessible_locations():
-                                possible_options.append(lambda state: path_to_access_rule(new_path, entrance) and state.has_Mirror(player))continue  else:
-                        continue
+                                possible_options.append(
+                                    lambda state: path_to_access_rule(new_path, entrance) and state.has_Mirror(player))
                 if new_region.is_light_world:
                     queue.append((new_region, new_path))
                 else:
