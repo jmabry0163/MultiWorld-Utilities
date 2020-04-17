@@ -161,7 +161,7 @@ def distribute_items_staleness(world):
     logging.getLogger('').debug('Unplaced items: %s - Unfilled Locations: %s', [item.name for item in itempool], [location.name for location in fill_locations])
 
 
-def fill_restrictive(world, base_state, locations, itempool, keys_in_itempool = None, single_player_placement = False):
+def fill_restrictive(world, base_state: CollectionState, locations, itempool, keys_in_itempool = None, single_player_placement=False):
     def sweep_from_pool():
         new_state = base_state.copy()
         for item in itempool:
@@ -190,9 +190,6 @@ def fill_restrictive(world, base_state, locations, itempool, keys_in_itempool = 
                 perform_access_check = True
                 if world.accessibility[item_to_place.player] == 'none':
                     perform_access_check = not world.has_beaten_game(maximum_exploration_state, item_to_place.player) if single_player_placement else not has_beaten_game
-
-                spot_to_fill = None
-
                 for location in locations:
                     if item_to_place.smallkey or item_to_place.bigkey:  # a better test to see if a key can go there
                         location.item = item_to_place
@@ -208,12 +205,12 @@ def fill_restrictive(world, base_state, locations, itempool, keys_in_itempool = 
                     elif item_to_place.smallkey or item_to_place.bigkey:
                         location.item = None
 
-                if spot_to_fill is None:
+                else:
                     # we filled all reachable spots. Maybe the game can be beaten anyway?
                     unplaced_items.insert(0, item_to_place)
-                    if world.can_beat_game():
-                        if world.accessibility[item_to_place.player] != 'none':
-                            logging.getLogger('').warning('Not all items placed. Game beatable anyway. (Could not place %s)' % item_to_place)
+                    if world.accessibility[item_to_place.player] != 'none' and world.can_beat_game():
+                        logging.getLogger('').warning(
+                            'Not all items placed. Game beatable anyway. (Could not place %s)' % item_to_place)
                         continue
                     raise FillError('No more spots to place %s' % item_to_place)
 
@@ -268,7 +265,7 @@ def distribute_items_restrictive(world, gftower_trash=False, fill_locations=None
 
     # fill in gtower locations with trash first
     for player in range(1, world.players + 1):
-        if not gftower_trash or not world.ganonstower_vanilla[player] or world.doorShuffle[player] == 'crossed':
+        if not gftower_trash or not world.ganonstower_vanilla[player] or world.doorShuffle[player] == 'crossed' or world.logic[player] == 'owglitches':
             continue
 
         gftower_trash_count = (random.randint(15, 50) if world.goal[player] == 'triforcehunt' else random.randint(0, 15))

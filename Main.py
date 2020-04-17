@@ -25,7 +25,7 @@ from ItemList import generate_itempool, difficulties, fill_prizes
 from Utils import output_path, parse_player_names, print_wiki_doors_by_region, print_wiki_doors_by_room
 from source.classes.BabelFish import BabelFish
 
-__version__ = '0.0.20.7u'
+__version__ = '0.0.20.8u'
 
 class EnemizerError(RuntimeError):
     pass
@@ -68,6 +68,7 @@ def main(args, seed=None, fish=None):
     world.dungeon_counters = args.dungeon_counters.copy()
     world.experimental = args.experimental.copy()
     world.fish = fish if fish else BabelFish(lang="en")
+    world.glitch_boots = args.glitch_boots.copy()
 
     world.rom_seeds = {player: random.randint(0, 999999999) for player in range(1, world.players + 1)}
 
