@@ -581,10 +581,7 @@ async def snes_flush_writes(ctx : Context):
 async def send_msgs(websocket, msgs):
     if not websocket or not websocket.open or websocket.closed:
         return
-    try:
-        await websocket.send(json.dumps(msgs))
-    except websockets.ConnectionClosed:
-        pass
+    await websocket.send(json.dumps(msgs))
 
 async def server_loop(ctx : Context, address = None):
     if ctx.socket is not None:
@@ -603,7 +600,7 @@ async def server_loop(ctx : Context, address = None):
 
     logging.info('Connecting to multiworld server at %s' % address)
     try:
-        ctx.socket = await websockets.connect(address, port=port, ping_timeout=60, ping_interval=30)
+        ctx.socket = await websockets.connect(address, port=port, ping_timeout=None, ping_interval=None)
         logging.info('Connected')
         ctx.server_address = address
 
@@ -827,10 +824,17 @@ class ClientCommandProcessor(CommandProcessor):
                 get_location_name_from_address(item.location), index, len(self.ctx.items_received)))
 
     def _cmd_missing(self):
-        """List all missing location checks"""
+        """List all missing location checks, from your local game state"""
+        count = 0
         for location in [k for k, v in Regions.location_table.items() if type(v[0]) is int]:
             if location not in self.ctx.locations_checked:
-                logging.info('Missing: ' + location)
+                self.output('Missing: ' + location)
+                count += 1
+
+        if count:
+            self.output(f"Found {count} missing location checks")
+        else:
+            self.output("No missing location checks found.")
 
     def _cmd_show_items(self, toggle: str = ""):
         """Toggle showing of items received across the team"""
@@ -858,8 +862,7 @@ async def console_loop(ctx: Context):
                 ctx.input_queue.put_nowait(input_text)
                 continue
 
-            command = input_text.split()
-            if not command:
+            if not input_text:
                 continue
             commandprocessor(input_text)
         except Exception as e:
