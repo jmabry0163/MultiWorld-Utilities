@@ -711,7 +711,7 @@ class CollectionState(object):
         return basemagic >= smallmagic
 
     def can_kill_most_things(self, player: int, enemies=5) -> bool:
-        return (self.has_blunt_weapon(player)
+        return (self.has_melee_weapon(player)
                 or self.has('Cane of Somaria', player)
                 or (self.has('Cane of Byrna', player) and (enemies < 6 or self.can_extend_magic(player)))
                 or self.can_shoot_arrows(player)
@@ -742,7 +742,7 @@ class CollectionState(object):
     def has_beam_sword(self, player: int) -> bool:
         return self.has('Master Sword', player) or self.has('Tempered Sword', player) or self.has('Golden Sword', player)
 
-    def has_blunt_weapon(self, player: int) -> bool:
+    def has_melee_weapon(self, player: int) -> bool:
         return self.has_sword(player) or self.has('Hammer', player)
 
     def has_Mirror(self, player: int) -> bool:
@@ -1725,7 +1725,7 @@ class Spoiler(object):
         if self.world.players == 1:
             self.bosses = self.bosses["1"]
 
-        from Main import __version__ as ERVersion
+        from Utils import __version__ as ERVersion
         self.metadata = {'version': ERVersion,
                          'logic': self.world.logic,
                          'mode': self.world.mode,
@@ -1781,7 +1781,7 @@ class Spoiler(object):
         self.parse_data()
         with open(filename, 'w', encoding="utf-8-sig") as outfile:
             outfile.write(
-                'ALttP Entrance Randomizer Version %s  -  Seed: %s\n\n' % (self.metadata['version'], self.world.seed))
+                'ALttP Berserker\'s Multiworld Version %s  -  Seed: %s\n\n' % (self.metadata['version'], self.world.seed))
             outfile.write('Filling Algorithm:               %s\n' % self.world.algorithm)
             outfile.write('Players:                         %d\n' % self.world.players)
             outfile.write('Teams:                           %d\n' % self.world.teams)

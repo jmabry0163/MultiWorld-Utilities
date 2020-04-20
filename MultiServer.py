@@ -185,7 +185,7 @@ async def on_client_connected(ctx: Context, client: Client):
         # tags are for additional features in the communication.
         # Name them by feature or fork, as you feel is appropriate.
         'tags': ['Berserker'],
-        'version': [1, 3, 0]
+        'version': Utils._version_tuple
     }]])
 
 async def on_client_disconnected(ctx: Context, client: Client):
@@ -419,8 +419,11 @@ class CommandProcessor(metaclass=CommandMeta):
 
     def _cmd_license(self):
         """Returns the licensing information"""
-        with open("LICENSE") as f:
-            self.output(f.read())
+        license = getattr(CommandProcessor, "license", None)
+        if not license:
+            with open(Utils.local_path("LICENSE")) as f:
+                CommandProcessor.license = license = f.read()
+        self.output(CommandProcessor.license)
 
     def default(self, raw: str):
         self.output("Echo: " + raw)
@@ -448,7 +451,10 @@ class ClientMessageProcessor(CommandProcessor):
 
     def _cmd_players(self):
         """Get information about connected and missing players"""
-        notify_all(self.ctx, get_players_string(self.ctx))
+        if len(self.ctx.player_names) < 10:
+            notify_all(self.ctx, get_players_string(self.ctx))
+        else:
+            self.output(get_players_string(self.ctx))
 
     def _cmd_forfeit(self):
         """Surrender and send your remaining items out to their recipients"""
