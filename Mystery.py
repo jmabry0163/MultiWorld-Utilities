@@ -37,6 +37,8 @@ def main():
     parser.add_argument('--outputpath')
     parser.add_argument('--race', action='store_true')
     parser.add_argument('--meta', default=None)
+    parser.add_argument('--log_output_path', help='Path to store output log')
+    parser.add_argument('--loglevel', default='info', help='Sets log level')
 
     for player in range(1, multiargs.multi + 1):
         parser.add_argument(f'--p{player}', help=argparse.SUPPRESS)
@@ -81,7 +83,7 @@ def main():
 
     erargs = parse_cli(['--multi', str(args.multi)])
     erargs.seed = seed
-    erargs.name = {x: "" for x in range(1, args.multi + 1)} # only so it can be overwrittin in mystery
+    erargs.name = {x: "" for x in range(1, args.multi + 1)}  # only so it can be overwrittin in mystery
     erargs.create_spoiler = args.create_spoiler
     erargs.race = args.race
     erargs.outputname = seedname
@@ -89,8 +91,36 @@ def main():
     erargs.teams = args.teams
 
     # set up logger
-    loglevel = {'error': logging.ERROR, 'info': logging.INFO, 'warning': logging.WARNING, 'debug': logging.DEBUG}[erargs.loglevel]
-    logging.basicConfig(format='%(message)s', level=loglevel)
+    if args.loglevel:
+        erargs.loglevel = args.loglevel
+    loglevel = {'error': logging.ERROR, 'info': logging.INFO, 'warning': logging.WARNING, 'debug': logging.DEBUG}[
+        erargs.loglevel]
+    import sys
+    class LoggerWriter(object):
+        def __init__(self, writer):
+            self._writer = writer
+            self._msg = ''
+
+        def write(self, message):
+            self._msg = self._msg + message
+            while '\n' in self._msg:
+                pos = self._msg.find('\n')
+                self._writer(self._msg[:pos])
+                self._msg = self._msg[pos + 1:]
+
+        def flush(self):
+            if self._msg != '':
+                self._writer(self._msg)
+                self._msg = ''
+
+    if args.log_output_path:
+        log = logging.getLogger("stderr")
+        log.addHandler(logging.StreamHandler())
+        sys.stderr = LoggerWriter(log.error)
+        os.makedirs(args.log_output_path, exist_ok=True)
+        logging.basicConfig(format='%(message)s', level=loglevel, filename=os.path.join(args.log_output_path, f"{seed}.log"))
+    else:
+        logging.basicConfig(format='%(message)s', level=loglevel)
 
     if args.rom:
         erargs.rom = args.rom
@@ -136,7 +166,7 @@ def main():
 
     erargs.names = ",".join(erargs.name[i] for i in range(1, args.multi + 1))
     del(erargs.name)
-
+    logging.info(erargs)
     DRMain(erargs, seed, BabelFish())
 
 

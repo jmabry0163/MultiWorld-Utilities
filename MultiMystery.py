@@ -23,6 +23,7 @@ import time
 import multiprocessing
 import threading
 import concurrent.futures
+import random
 
 
 def feedback(text: str):
@@ -63,6 +64,8 @@ if __name__ == "__main__":
         rom_file = options["general_options"]["rom_file"]
         host = options["server_options"]["host"]
         port = options["server_options"]["port"]
+        log_output_path = multi_mystery_options["log_output_path"]
+        log_level = multi_mystery_options["log_level"]
 
         py_version = f"{sys.version_info.major}.{sys.version_info.minor}"
 
@@ -106,21 +109,31 @@ if __name__ == "__main__":
             command += " --create_spoiler"
         if race:
             command += " --race"
+        if log_output_path:
+            command += f" --log_output_path \"{log_output_path}\""
+        if log_level:
+            command += f" --loglevel {log_level}"
         if os.path.exists(os.path.join(player_files_path, meta_file_path)):
             command += f" --meta {os.path.join(player_files_path, meta_file_path)}"
 
         print(command)
         import time
         start = time.perf_counter()
+
+        def seed_exists(task):
+            for file in os.listdir(task.folder.name):
+                if task.seedname in file:
+                    return True
+            return False
         
-        def copy_seed(source: str, destination: str):
-            seedname = None
+        def copy_seed(task, destination: str):
+            # seedname = None
             os.makedirs(destination, exist_ok=True)
-            for file in os.listdir(source):
-                shutil.copy(os.path.join(source, file), os.path.join(destination, file))
-                if not seedname and (file.endswith("_multidata") or file.endswith(".sfc") or file.endswith("_spoiler.txt")):
-                    seedname = file.split('.')[0].split('_')[1]
-            return seedname
+            for file in os.listdir(task.folder.name):
+                shutil.copy(os.path.join(task.folder.name, file), os.path.join(destination, file))
+                # if not seedname and (file.endswith("_multidata") or file.endswith(".sfc") or file.endswith("_spoiler.txt")):
+                #     seedname = file.split('.')[0].split('_')[1]
+            return task.seedname
 
         def get_working_seed():#is a function for automatic deallocation of resources that are no longer needed when the server starts
             cpu_threads = multi_mystery_options["cpu_threads"]
@@ -140,12 +153,34 @@ if __name__ == "__main__":
 
             pool = concurrent.futures.ThreadPoolExecutor(max_workers=cpu_threads)
             task_mapping = {}
-            for x in range(1, max_attempts+1):
+
+            def gen_seed(command: str):
+                starttime = time.perf_counter()
                 folder = tempfile.TemporaryDirectory()
-                taskcommand = command + f" --outputpath {folder.name}"
-                task = pool.submit(subprocess.run, taskcommand, capture_output=True, shell=False, text=True)
+                random.seed(None)
+                seed = random.randint(0, 999999999)
+                random.seed(seed)
+                seedname = "M"+(f"{random.randint(0, 999999999)}".zfill(9))
+                taskcommand = command + f" --outputpath {folder.name} --seed {seed}"
+                result = subprocess.run(taskcommand, capture_output=True, shell=False, text=True)
+                return result, folder, seed, seedname, time.perf_counter() - starttime
+
+            def move_output_log(task, destination: str):
+                if log_output_path:
+                    try:
+                        os.makedirs(os.path.join(log_output_path, destination), exist_ok=True)
+                        shutil.move(os.path.join(log_output_path, f"{task.seed}.log"),
+                                    os.path.join(log_output_path, destination, f"{task.seed}.log"))
+                    except:
+                        pass
+
+            for x in range(1, max_attempts+1):
+                task = pool.submit(gen_seed, command)
                 task.task_id = x
-                task.folder = folder
+                task.folder = None
+                task.seed = None
+                task.seedname = None
+                task.time = float(0)
                 task_mapping[x] = task
 
             errors = []
@@ -173,40 +208,52 @@ if __name__ == "__main__":
                 return ", ".join(still_alive) if still_alive else "None"
 
             min_logical_seed = max_attempts
+            min_time = float("infinity")
+            max_time = float(0)
+            total_time = float(0)
             from tqdm import tqdm
             with tqdm(concurrent.futures.as_completed(task_mapping.values()),
                       total=len(task_mapping), unit="seed(s)", 
                       desc=(f"0.0% Success rate, " if keep_all_seeds else "") + f"Generating: {get_alive_threads()}") as progressbar:
                 for task in progressbar:
                     try:
-                        result = task.result()
+                        result, task.folder, task.seed, task.seedname, task.time = task.result()
                         if result.returncode:
                             raise Exception(result.stderr)
                     except concurrent.futures.CancelledError:
-                        task.folder.cleanup()
                         dead_or_alive[task.task_id] = False
                     except:
                         error = io.StringIO()
                         traceback.print_exc(file=error)
                         errors.append(error.getvalue())
+                        move_output_log(task, "Unplayable" if seed_exists(task) else "Failure")
                         task.folder.cleanup()
                         dead_or_alive[task.task_id] = False
+
                         if "Please fix your yaml." in error.getvalue():
                             cancel_remaining()
                             tqdm.write("YAML error")
+                            tqdm.write(error.getvalue())
                             break
+
                         done = check_if_done()
                         if done and not keep_all_seeds:
                             break
                     else:
-                        msg = f"Seed Attempt #{task.task_id:4} was successful."
+                        msg = f"Seed Attempt #{task.task_id:4} ({task.seedname}) was successful."
+                        move_output_log(task, "Success")
 
+                        if task.time < min_time:
+                            min_time = task.time
+                        if task.time > max_time:
+                            max_time = task.time
+                        total_time += task.time
                         dead_or_alive[task.task_id] = True
                         alive += 1
                         done = check_if_done()
                         if keep_all_seeds:
                             tqdm.write(msg)
-                            copy_seed(task.folder.name, os.path.join(output_path, basedir, str(task.task_id)))
+                            copy_seed(task, os.path.join(output_path, basedir, str(task.task_id)))
                         elif done:
                             tqdm.write(msg)
                             cancel_remaining()
@@ -228,10 +275,16 @@ if __name__ == "__main__":
 
             task_id = check_if_done()
             if not task_id:
-                input("No seed was successful. Press enter to get errors.")
-                for error in errors:
-                    print(error)
+                if not log_output_path:
+                    input("No seed was successful. Press enter to get errors.")
+                    for error in errors:
+                        print(error)
+                else:
+                    print(f"Check {os.path.join(log_output_path,'Failure')} for errors.")
                 sys.exit()
+
+            if keep_all_seeds:
+                print(f"Took an average of {total_time/alive:.3f} to gen each seed. Min time: {min_time:.3f}, Max time: {max_time:.3f}")
 
             return task_mapping[task_id]
 
@@ -239,7 +292,7 @@ if __name__ == "__main__":
 
 
         task = get_working_seed()
-        seedname = copy_seed(task.folder.name, output_path)
+        seedname = copy_seed(task, output_path)
 
         print()
         print(f"Took {time.perf_counter()-start:.3f} seconds to generate rom(s).")
