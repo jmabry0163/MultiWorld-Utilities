@@ -45,18 +45,18 @@ Uncle_texts = [
     "Don't worry.\nI got this\ncovered.",
     "Race you to\nthe castle!",
     "\n      hi",
-    "I'M JUST GOING\nOUT FOR A\nPACK OF SMOKES",
+    "I'm just going\nout for a\npack of smokes",
     "It's dangerous\nto go alone.\nSee ya!",
-    "ARE YOU A BAD\nENOUGH DUDE TO\nRESCUE ZELDA?",
+    "Are you a bad\nenough dude to\nrescue Zelda?",
     "\n\n    I AM ERROR",
     "This seed is\nsub 2 hours,\nguaranteed.",
     "The chest is\na secret to\neverybody.",
     "I'm off to\nfind the\nwind fish.",
     "The shortcut\nto Ganon\nis this way!",
-    "THE MOON IS\nCRASHING! RUN\nFOR YOUR LIFE!",
+    "The moon is\ncrashing! Run\nfor your life!",
     "Time to fight\nhe who must\nnot be named.",
-    "RED MAIL\nIS FOR\nCOWARDS.",
-    "HEY!\n\nLISTEN!",
+    "Red Mail\nis for\ncowards.",
+    "Hey!\n\nListen!",
     "Well\nexcuuuuuse me,\nprincess!",
     "5,000 Rupee\nreward for >\nYou're boned.",
     "Welcome to\nStoops Lonk's\nHoose",
@@ -66,6 +66,22 @@ Uncle_texts = [
     "Get to the\nchop...\ncastle!",
     "Come with me\nif you want\nto live",
     "I must go\nmy planet\nneeds me",
+    "Are we in\ngo mode yet?",
+    "Darn, I\nthought this\nwas combo.",
+    "Don't check\nanything I\nwouldn't!",
+    "I know where\nthe bow is!",
+    "This message\nwill self\ndestruct.",
+    "Time to cast\nMeteo on\nGanon!",
+    "I have a\nlong, full\nlife ahead!",
+    "Why did that\nsoda have a\nskull on it?",
+    "Something\nrandom just\ncame up.",
+    "I'm bad at\nthis. Can you\ndo it for me?",
+    "Link!\n   Wake up!\n      ... Bye!",
+    "Text me when\nyou hit\ngo mode.",
+    "Turn off the\nstove before\nyou leave.",
+    "It's raining.\nI'm taking\nthe umbrella.",
+    "Count to 30.\nThen come\nfind me.",
+    "Gonna shuffle\nall the items\nreal quick.",
 ]
 Triforce_texts = [
     'Product has Hole in center. Bad seller, 0 out of 5.',
@@ -74,32 +90,30 @@ Triforce_texts = [
     '\n  Well Done!',
     'You just wasted 2 hours of your life.',
     'This was meant to be a trapezoid'
-] * 2 + [
-    "\n     G G",
+    "\n   Success!", #Contributed by caitsith2
+                 ] * 2 + [
+    "\n     GG",
     "All your base\nare belong\nto us.",
     "You have ended\nthe domination\nof Dr. Wily",
-    "  thanks for\n    playing!!!",
-    "\n   You Win!",
-    "  Thank you!\n    your quest\n     is over.",
-    "   A winner\n         is\n        you!",
-    "\n   WINNER!!",
-    "\n  I'm  sorry\n\n  but your\nprincess is in\nanother castle",
-    "\n   success!",
-    "    Whelp…\n      that  just\n       happened",
-    "   Oh  hey…\n      it's you",
+    " Thanks for\n  playing!!!",
+    "\n  You Win!",
+    "  Thank you!\n  Your quest\n   is over.",
+    "Your princess \n is in another\n castle."
+    "\n  I'm sorry",
+    "  Whelp…\n   that just\n    happened",
+    "   Oh hey…\n    it's you",
     "\n  Wheeeeee!!",
-    "   Time for\n    another one?",
+    "  Time for\n   another one?",
     "and\n\n         scene",
-    "\n   GOT EM!!",
-    "\nTHE VALUUUE!!!",
+    "\n  Got 'em!!",
+    "\nThe valuuue!!!",
     "Cool seed,\n\nright?",
     "\n  We did it!",
-    "  Spam those\n    emotes in\n    wilds chat",
     "\n   O  M  G",
-    " Hello.  Will\n   you be my\n    friend?",
-    "   Beetorp\n        was\n       here!",
+    " Hello.  Will\n  you be my\n   friend?",
+    " Berserker\n     was\n    here!",
     "The Wind Fish\nwill wake\nsoon.    Hoot!",
-    "meow meow meow\nmeow meow meow\n  oh my god!",
+    "Meow meow meow\nMeow meow meow\n  Oh my god!",
     "Ahhhhhhhhh\nYa ya yaaaah\nYa ya yaaah",
     ".done\n\n.comment lol",
     "You get to\ndrink from\nthe firehose",
@@ -107,10 +121,15 @@ Triforce_texts = [
     "You get one\nwish.  Choose\nwisely, hero!",
     "Can you please\nbreak us three\nup?  Thanks.",
     "  Pick us up\n  before we\n  get dizzy!",
-    "\n   Honk."
+    "Thank you,\nMikey. You’re\n2 minutes late",
+    "This was a\n7000 series\ntrain.",
+    "   I'd buy\n   that for\n   a rupee!",
+    " Did you like\n   that bow\n  placement?",
+    "I promise the\nnext seed will\nbe better.",
+    "\n   Honk.",
 ]
-BombShop2_texts = ['Bombs!\nBombs!\nBiggest!\nBestest!\nGreatest!\nBoomest!']
-Sahasrahla2_texts = ['You already got my item, idiot.', 'Why are you still talking to me?', 'This text won\'t change.', 'Have you met my brother, Hasarahshla?']
+BombShop2_texts = ['Bombs!\nBombs!\nBiggest!\nBestest!\nGreatest!\nBoomiest!']
+Sahasrahla2_texts = ['You already got my item, idiot.', 'Why are you still talking to me?', 'Have you met my brother, Hasarahshla?']
 Blind_texts = [
     "I hate insect\npuns, they\nreally bug me.",
     "I haven't seen\nthe eye doctor\nin years.",
@@ -125,10 +144,7 @@ Blind_texts = [
     "A baker's job\nis a piece of\ncake.",
     "My optometrist\nsaid I have\nvision!",
     "When you're a\nbaker, don't\nloaf around.",
-    "Mire requires\nEther Quake,\nor Bombos.",
     "Broken pencils\nare pointless.",
-    "The food they\nserve guards\nlasts sentries",
-    "Being crushed\nby big objects\nis depressing.",
     "A tap dancer's\nroutine runs\nhot and cold.",
     "A weeknight is\na tiny\nnobleman.",
     "The chimney\nsweep wore a\nsoot and tye.",
@@ -139,13 +155,24 @@ Blind_texts = [
     "Archers give\ngifts tied\nwith a bow.",
     "A healed\ngambler is\nall better.",
     "Any old sword\nwill make the\ncut here.",
-    "Lazy wyrms\nkeep dragon\ntheir feet.",
+    "Lazy wyrms\nkeep dragin'\ntheir feet.",
     "Percussionist\nmasters drum\nup audiences.",
     "Retrievers\nlove fetch\nquests.",
     "Sausage is\nthe wurst.",
     "I tried to\ncatch fog,\nbut I mist.",
     "Winter is a\ngreat time\nto chill.",
-    "Do you think\nthe Ice Rod\nis cool?",
+    "Pyramids?\nI never saw\nthe point.",
+    "Stone golems\nare created as\nblank slates.",
+    "Desert humor\nis often dry.",
+    "Ganon is a\nbacon of\ndespair!",
+    "Butchering\ncows means\nhigh steaks.",
+    "I can't search\nthe web...\nToo many links",
+    "I can whistle\nMost pitches\nbut I can't C",
+    "The Blinds\nStore is\ncurtain death",
+    "Dark Aga Rooms\nare not a\nbright idea.",
+    "Best advice\nfor a Goron?\nBe Boulder.",
+    "Equestrian\nservices are\na stable job.",
+    "Do I like\ndrills? Just\na bit.",
 ]
 Ganon1_texts = [
     "Start your day\nsmiling with a\ndelicious\nwhole grain\nbreakfast\ncreated for\nyour\nincredible\ninsides.",
@@ -153,7 +180,7 @@ Ganon1_texts = [
     "Impa says that\nthe mark on\nyour hand\nmeans that you\nare the hero\nchosen to\nawaken Zelda.\nYour blood can\nresurrect me.",
     "Don't stand,\n\ndon't stand so\nDon't stand so\n\nclose to me\nDon't stand so\nclose to me\nBack off buddy",
     "So ya\nThought ya\nMight like to\ngo to the show\nTo feel the\nwarm thrill of\nconfusion\nThat space\ncadet glow.",
-    "Like other\npulmonate land\ngastropods,\nthe majority\nof land slugs\nhave two pairs\nof 'feelers'\n,or tentacles,\non their head.",
+    "Like other\npulmonate land\ngastropods,\nthe majority\nof land slugs\nhave two pairs\nof 'feelers'\nor tentacles,\non their head.",
     "If you were a\nburrito, what\nkind of a\nburrito would\nyou be?\nMe, I fancy I\nwould be a\nspicy barbacoa\nburrito.",
     "I am your\nfather's\nbrother's\nnephew's\ncousin's\nformer\nroommate. What\ndoes that make\nus, you ask?",
     "I'll be more\neager about\nencouraging\nthinking\noutside the\nbox when there\nis evidence of\nany thinking\ninside it.",
@@ -171,6 +198,10 @@ Ganon1_texts = [
     "When I conquer\nthe Light\nWorld, I'll\nhold a parade\nof all my\nmonsters to\ndemonstrate my\nmight to the\npeople!",
     "Life, dreams,\nhope...\nWhere'd they\ncome from? And\nwhere are they\nheaded?  These\nthings... I am\ngoing to\ndestroy!",
     "My minions all\nfailed to\nguard those\nitems?!\n\nWhy am I\nsurrounded by\nincompetent\nfools?!",
+    "Bacon dates to\n1500 BCE and\nrefers to the\nback of a pig.\nThe average\nAmerican eats\n18 pounds of\nRoman \"petaso\"\nevery year.",
+    "The enrichment\nCenter would\nLike to remind\nYou that the\nCompanion\nDuck will not\nbetray you\nand in fact\ncannot speak.",
+    "Goose is\nactually the\nterm for\nfemale geese,\nmale geese are\ncalled\nganders.",
+    "Never gonna give\nyou up. Never\ngonna let you\ndown.\nNever gonna run\naround and\ndesert you."
 ]
 TavernMan_texts = [
     "What do you\ncall a blind\ndinosaur?\na doyouthink-\nhesaurus.",
@@ -245,10 +276,23 @@ junk_texts = [
     "{C:GREEN}\nThe gnome asks\nyou to guess\nhis name.   >",
     "{C:GREEN}\nI heard beans\non toast is a\ngreat meal. >",
     "{C:GREEN}\n> Sweetcorn\non pizza is a\ngreat choice.",
-    "{C:GREEN}\n> race roms\ndon’t have\nspoiler logs",
     "{C:GREEN}\nI bet a nice\ncup of tea\nwould help! >",
     "{C:GREEN}\nI bet you\nexpected help,\ndidn't you? >",
-    "{C:GREEN}\nLearn to make\nplogues, easy\nand yummy!  >"
+    "{C:GREEN}\nLearn to make\nplogues, easy\nand yummy!  >",
+    "{C:GREEN}\nI don't know\nwhere it is\neither.  >",
+    "{C:GREEN}\nA dog exists\nsomewhere. >",
+    "{C:GREEN}\nIf all else\nfails use\nfire.  >",
+    "{C:GREEN}\nItems are\nrequired to\nwin.  >",
+    "{C:GREEN}\nDid you try\nchecking\nvanilla?  >",
+    "{C:GREEN}\n> If you find\nmy lunch,\ndon't eat it.",
+    "{C:GREEN}\nDeadrocks are\nannoying.  >",
+    "{C:GREEN}\nMist Form\nis in the\nCatacombs.  >",
+    "{C:GREEN}\nMaybe you\ncould hire a\ndetective?  >",
+    "{C:GREEN}\n>  READ\nor the owl\nwill eat you.",
+    "{C:GREEN}\n> Bunnies\nare cute.",
+    "{C:GREEN}\nPugs are the\nsuperior dog\nbreed.  >",
+    "{C:GREEN}\nThis is\nBerserker's\nMultiworld.>",
+    "{C:GREEN}\nOther randos\nexist too!\nTry some!  >",
 ]
 
 KingsReturn_texts = [
@@ -1285,7 +1329,7 @@ class TextTable(object):
             'maiden_crystal_6',
             'maiden_crystal_7',
             'maiden_ending',
-            'maiden_confirm_undersood',
+            'maiden_confirm_understood',
             'maiden_crystal_7_again',
 
             # item pickup text
@@ -1788,7 +1832,7 @@ class TextTable(object):
         text['maiden_crystal_6'] = CompressedTextMapper.convert("{SPEED2}\n{BOTTOM}\n{NOBORDER}\nI have a pretty green dress.\n{SPEED1}\nJust thought I would tell you.")
         text['maiden_crystal_7'] = CompressedTextMapper.convert("{SPEED2}\n{BOTTOM}\n{NOBORDER}\nIt's about friggin time.\n{SPEED1}\nDo you know how long I've been waiting?")
         text['maiden_ending'] = CompressedTextMapper.convert("May the way of the hero lead to the Triforce")
-        text['maiden_confirm_undersood'] = CompressedTextMapper.convert("{SPEED2}\n{BOTTOM}\n{NOBORDER}\nCapisce?\n  ≥ Yes\n    No\n{CHOICE}")
+        text['maiden_confirm_understood'] = CompressedTextMapper.convert("{SPEED2}\n{BOTTOM}\n{NOBORDER}\nCapisce?\n  ≥ Yes\n    No\n{CHOICE}")
         text['barrier_breaking'] = CompressedTextMapper.convert("What did the seven crystals say to Ganon's Tower?")
         text['maiden_crystal_7_again'] = CompressedTextMapper.convert("{SPEED2}\n{BOTTOM}\n{NOBORDER}\nIt's about friggin time.\n{SPEED1}\nDo you know how long I have been waiting?")
         text['agahnim_zelda_teleport'] = CompressedTextMapper.convert("I am a magician, and this is my act. Watch as I make this girl disappear")
@@ -1824,8 +1868,8 @@ class TextTable(object):
         text['item_get_whole_heart'] = CompressedTextMapper.convert("You got a whole ♥!!\nGo you!")
         text['item_get_sanc_heart'] = CompressedTextMapper.convert("You got a whole ♥!\nGo you!")
         text['fairy_fountain_refill'] = CompressedTextMapper.convert("Well done, lettuce have a cup of tea…")
-        text['death_mountain_bullied_no_pearl'] = CompressedTextMapper.convert("I wrote a word. Just one. On a stone and threw it into the ocean. It was my word. It was what would save me. I hope someday someone finds that word and brings it to me. The word is the beginning of my song.")
-        text['death_mountain_bullied_with_pearl'] = CompressedTextMapper.convert("I wrote a song. Just one. On a guitar and threw it into the sky. It was my song. It could tame beasts and free minds. It flitters on the wind and lurks in our minds. It is the song of nature, of humanity, of dreams and dreamers.")
+        text['death_mountain_bullied_no_pearl'] = CompressedTextMapper.convert("MIT License\nCopyright (c) 2017 LLCoolDave\nCopyright (c) 2020 Berserker66\nCopyright (c) 2020 CaitSith2\nCopyright 2016, 2017 Equilateral IT\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.")
+        text['death_mountain_bullied_with_pearl'] = CompressedTextMapper.convert("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")
         text['death_mountain_bully_no_pearl'] = CompressedTextMapper.convert("Add garlic, ginger and apple and cook for 2 minutes. Add carrots, potatoes, garam masala and curry powder and stir well. Add tomato paste, stir well and slowly add red wine and bring to a boil. Add sugar, soy sauce and water, stir and bring to a boil again.")
         text['death_mountain_bully_with_pearl'] = CompressedTextMapper.convert("I think I forgot how to smile…")
         text['shop_darkworld_enter'] = CompressedTextMapper.convert("It's dangerous outside, buy my crap for safety.")
